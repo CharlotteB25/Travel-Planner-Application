@@ -49,6 +49,4 @@ tripSchema.pre("save", function (next) {
   next();
 });
 
-const TripModel = mongoose.model<Trip>("Trip", tripSchema);
-
-export default TripModel;
+export default Trip;
