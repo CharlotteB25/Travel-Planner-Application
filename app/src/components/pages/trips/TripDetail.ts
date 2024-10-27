@@ -104,7 +104,7 @@ class TripDetail extends LitElement {
 
     const { trip } = tripContextValue;
 
-    const countdownDays = this.getCountdownDays(trip.startDate);
+    const countdownDays = this.getCountdownDays(trip.startDate.toISOString());
     const countdownMessage =
       countdownDays >= 0
         ? `Countdown: ${countdownDays} days until the trip starts!`
