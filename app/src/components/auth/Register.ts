@@ -1,7 +1,5 @@
 import { LitElement, css, html } from "lit";
-
 import { customElement, property } from "lit/decorators.js";
-
 import "@components/design/LoadingIndicator";
 import "@components/design/ErrorView";
 import { register } from "@core/modules/auth/Auth.api";
@@ -33,11 +31,19 @@ class Register extends LitElement {
     try {
       const { data } = await register({ email, password, name });
       this.isLoading = false;
+
+      // Save the token to storage
       Storage.saveAuthToken(data.token);
+
+      // Log the token to the console
+      console.log("Auth Token:", data.token);
+
+      // Navigate to the login page
       Router.go("/");
     } catch (error: any) {
       this.isLoading = false;
       this.error = error.message;
+      console.error("Registration error:", error); // Log any registration errors
     }
   }
 

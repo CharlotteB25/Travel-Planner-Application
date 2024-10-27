@@ -26,6 +26,8 @@ class Login extends LitElement {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
+    console.log("Logging in with:", { email, password }); // Debug log
+
     this.isLoading = true;
 
     login({ email, password })
@@ -36,8 +38,8 @@ class Login extends LitElement {
       })
       .catch((error) => {
         this.isLoading = false;
+        console.error("Login error:", error); // Log the entire error object
 
-        // Handle specific error responses
         if (error.response) {
           const { status, data } = error.response;
 
@@ -62,8 +64,8 @@ class Login extends LitElement {
     const { isLoading, error } = this;
 
     return html`
-      <div class="container">
-        <div class="form-wrapper">
+      <div class="split">
+        <div class="split__content">
           <app-logo></app-logo>
           ${error ? html`<error-view error="${error}"></error-view>` : ""}
           <form @submit=${this.handleSubmit}>
@@ -107,56 +109,23 @@ class Login extends LitElement {
     formStyles,
     buttonStyles,
     css`
-      .container {
+      .split {
         display: flex;
-        justify-content: center;
-        align-items: center;
         height: 100vh;
         width: 100vw;
-        background: var(
-          --background-color,
-          #f0f0f0
-        ); /* Optional background color */
-      }
-
-      .form-wrapper {
-        display: flex;
-        flex-direction: column;
         align-items: center;
-        padding: 2rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
-
+      .split__image {
+        width: 60vw;
+        height: 100vh;
+        object-fit: cover;
+      }
+      .split__content {
+        flex: 1;
+        padding: 5rem 2rem;
+      }
       .form-control {
         margin-top: 1rem;
-        width: 100%;
-      }
-
-      .form-control__label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: bold;
-      }
-
-      .form-control__input {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-      }
-
-      .form-control a {
-        display: block;
-        margin-top: 1rem;
-        color: var(--primary);
-        text-decoration: none;
-      }
-
-      .form-control a:hover {
-        text-decoration: underline;
       }
     `,
   ];

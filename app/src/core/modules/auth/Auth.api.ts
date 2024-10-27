@@ -17,7 +17,7 @@ export const login = (body: LoginBody) => {
   return API.post<Auth>("/login", body);
 };
 
-// Function to handle user registration
+// Function to handle user registration with a redirect on success
 export const register = (body: RegisterBody) => {
   return API.post<Auth>("/register", body);
 };

@@ -32,6 +32,7 @@ class AuthContainer extends LitElement {
 
     API.interceptors.request.use((config) => {
       const token = Storage.getAuthToken();
+      console.log("Using token for requests:", token); // Log token
       if (token) {
         config.headers["Authorization"] = `Bearer ${token}`;
       }
@@ -41,6 +42,7 @@ class AuthContainer extends LitElement {
     API.interceptors.response.use(
       (response: AxiosResponse) => response,
       (error: AxiosError) => {
+        console.error("API response error:", error); // Log error details
         if (error.response?.status === 401) {
           this.user = null;
           logout();
@@ -49,13 +51,15 @@ class AuthContainer extends LitElement {
       }
     );
 
-    // fetch user
+    // Fetch user
     this.isLoading = true;
     getCurrentUser()
       .then(({ data }) => {
         this.user = data;
+        console.log("User data loaded:", this.user); // Log user data
       })
       .catch((error) => {
+        console.error("Error fetching user:", error); // Log error details
         this.error = error.message;
       })
       .finally(() => {

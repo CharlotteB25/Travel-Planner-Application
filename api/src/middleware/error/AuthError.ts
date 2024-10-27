@@ -2,6 +2,6 @@ import AppError from "./AppError";
 
 export default class AuthError extends AppError {
   constructor() {
-    super("Unauthorized", 401);
+    super("Unauthorised", 401);
   }
 }
